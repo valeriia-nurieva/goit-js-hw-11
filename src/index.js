@@ -2,8 +2,8 @@ import { refs } from './js/refs';
 import { PixabayAPI } from './js/pixabay-api';
 import { createMarkup } from './js/create-markup';
 
-import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import './css/gallery.css';
@@ -26,7 +26,7 @@ async function onFormSubmit(e) {
   clearPage();
 
   try {
-    Notiflix.Loading.circle();
+    Loading.circle();
     const { hits, total, totalHits } = await pixabay.getPhotos();
 
     hits.length === 0
@@ -47,13 +47,13 @@ async function onFormSubmit(e) {
     Notify.failure('Sorry, something went wrong. Please try again.');
     clearPage();
   } finally {
-    Notiflix.Loading.remove();
+    Loading.remove();
   }
 }
 
 async function onLoadMore() {
   try {
-    Notiflix.Loading.circle();
+    Loading.circle();
     pixabay.incrementPage();
     const { hits } = await pixabay.getPhotos();
 
@@ -70,7 +70,7 @@ async function onLoadMore() {
     Notify.failure('Sorry, something went wrong. Please try again.');
     clearPage();
   } finally {
-    Notiflix.Loading.remove();
+    Loading.remove();
   }
 }
 
