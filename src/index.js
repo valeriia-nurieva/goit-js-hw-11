@@ -19,7 +19,7 @@ async function onFormSubmit(e) {
   const { searchQuery } = e.currentTarget.elements;
   const query = searchQuery.value.trim().toLowerCase();
   if (!query) {
-    Notify.failure('Enter data to search');
+    Notify.failure('Enter data to search', notifyOpt);
     return;
   }
   pixabay.query = query;
@@ -31,7 +31,7 @@ async function onFormSubmit(e) {
 
     hits.length === 0
       ? Notify.info(
-          'Sorry, there are no images matching your search query. Please try again.'
+        'Sorry, there are no images matching your search query. Please try again.', notifyOpt
         )
       : Notify.success(`Hooray! We found ${totalHits} images.`);
 
@@ -44,7 +44,7 @@ async function onFormSubmit(e) {
     simpleLightbox.refresh();
   } catch (error) {
     console.log(error.message);
-    Notify.failure('Sorry, something went wrong. Please try again.');
+    Notify.failure('Sorry, something went wrong. Please try again.', notifyOpt);
     clearPage();
   } finally {
     Loading.remove();
@@ -67,7 +67,7 @@ async function onLoadMore() {
     }
   } catch (error) {
     console.log(error.message);
-    Notify.failure('Sorry, something went wrong. Please try again.');
+    Notify.failure('Sorry, something went wrong. Please try again.', notifyOpt);
     clearPage();
   } finally {
     Loading.remove();
@@ -84,3 +84,9 @@ function renderMarkup(array) {
   const markup = createMarkup(array);
   refs.gallery.insertAdjacentHTML('beforeend', markup);
 }
+
+const notifyOpt = {
+  position: 'center-center',
+  backOverlay: true,
+  clickToClose: true,
+};
