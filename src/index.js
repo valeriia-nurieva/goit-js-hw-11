@@ -1,11 +1,13 @@
 import { refs } from './js/refs';
 import { PixabayAPI } from './js/pixabay-api';
 import { createMarkup } from './js/create-markup';
+import { spinerPlay, spinerStop } from './js/spiner';
 
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import './css/gallery.css';
+import './css/spiner.css';
 
 const pixabay = new PixabayAPI();
 
@@ -25,6 +27,7 @@ async function onFormSubmit(e) {
   clearPage();
 
   try {
+    spinerPlay();
     const { hits, total, totalHits } = await pixabay.getPhotos();
 
     hits.length === 0
@@ -37,25 +40,21 @@ async function onFormSubmit(e) {
     if (pixabay.isShowLoadMore) {
       refs.loadMoreBtn.classList.remove('is-hidden');
     }
-      renderMarkup(hits);
-      const simpleLightbox = new SimpleLightbox('.gallery-item');
-
-    // const { height: cardHeight } = document
-    //   .querySelector('.gallery')
-    //   .firstElementChild.getBoundingClientRect();
-    // window.scrollBy({
-    //   top: cardHeight * 2,
-    //   behavior: 'smooth',
-    // });
+    renderMarkup(hits);
+    const simpleLightbox = new SimpleLightbox('.gallery-item');
+    simpleLightbox.refresh();
   } catch (error) {
     console.log(error.message);
     Notify.failure('Sorry, something went wrong. Please try again.');
     clearPage();
+  } finally {
+    spinerStop();
   }
 }
 
 async function onLoadMore() {
   try {
+    spinerPlay();
     pixabay.incrementPage();
     const { hits } = await pixabay.getPhotos();
 
@@ -71,6 +70,8 @@ async function onLoadMore() {
     console.log(error.message);
     Notify.failure('Sorry, something went wrong. Please try again.');
     clearPage();
+  } finally {
+    spinerStop();
   }
 }
 

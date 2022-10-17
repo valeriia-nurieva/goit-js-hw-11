@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page title</title>
+    <title>Gallery</title>
     <link rel="stylesheet" href="./sass/index.scss" />
     <link rel="stylesheet" href="css/gallery.css" />
     <script type="module" src="./index.js"></script>
@@ -16,8 +16,13 @@
       <button class="button" type="submit">Search</button>
       </div>
     </form>
-    <div class="gallery">      
+<div class="container">
+<div class="gallery">
+</div>
+<button type="button" class="button load-more is-hidden">Load more</button>
+</div>
+    <div class="backdrop is-hidden" data-load>
+      <div class="js-spinner"></div>
     </div>
-    <button type="button" class="button load-more is-hidden">Load more</button>
   </body>
 </html>

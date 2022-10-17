@@ -4,16 +4,16 @@ export function createMarkup(array) {
   <img class="gallery-image" src="${webformatURL}" alt="${tags}" loading="lazy" />
   <div class="info">
     <p class="info-item">
-      <b>Likes</b><span class="info-count">${likes}</span>
+      <b>Likes</b>${likes}
     </p>
     <p class="info-item">
-      <b>Views</b><span class="info-count">${views}</span>
+      <b>Views</b>${views}
     </p>
     <p class="info-item">
-      <b>Comments</b><span class="info-count">${comments}</span>
+      <b>Comments</b>${comments}
     </p>
     <p class="info-item">
-      <b>Downloads</b><span class="info-count">${downloads}</span>
+      <b>Downloads</b>${downloads}
     </p>
   </div>
 </div></a>`
