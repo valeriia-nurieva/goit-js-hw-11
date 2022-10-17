@@ -1,13 +1,12 @@
 import { refs } from './js/refs';
 import { PixabayAPI } from './js/pixabay-api';
 import { createMarkup } from './js/create-markup';
-import { spinerPlay, spinerStop } from './js/spiner';
 
+import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import './css/gallery.css';
-import './css/spiner.css';
 
 const pixabay = new PixabayAPI();
 
@@ -27,7 +26,7 @@ async function onFormSubmit(e) {
   clearPage();
 
   try {
-    spinerPlay();
+    Notiflix.Loading.circle();
     const { hits, total, totalHits } = await pixabay.getPhotos();
 
     hits.length === 0
@@ -48,13 +47,13 @@ async function onFormSubmit(e) {
     Notify.failure('Sorry, something went wrong. Please try again.');
     clearPage();
   } finally {
-    spinerStop();
+    Notiflix.Loading.remove();
   }
 }
 
 async function onLoadMore() {
   try {
-    spinerPlay();
+    Notiflix.Loading.circle();
     pixabay.incrementPage();
     const { hits } = await pixabay.getPhotos();
 
@@ -71,7 +70,7 @@ async function onLoadMore() {
     Notify.failure('Sorry, something went wrong. Please try again.');
     clearPage();
   } finally {
-    spinerStop();
+    Notiflix.Loading.remove();
   }
 }
 
